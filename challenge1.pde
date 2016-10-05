@@ -1,31 +1,35 @@
-final int frameEnd = 500;
+int i;
 
 void setup() {
   size(1000, 1000, P3D);
-  background(135, 15, 15);
   stroke(0, 50);
-  fill(255, 200);
-  //ortho();
 }
 
 void draw() {
-  pushMatrix();
-  //translate(0, 0, random(200));
-  scale(random(1));
-  //fill(255, 200);
-  //ellipse(mouseX, mouseY, 50, 20);
-  //fill(0);
-  //ellipse(mouseX + 5, mouseY + 2, 10, 10);
-  //translate(mouseX + random(300), mouseY + random(400));
-  fill(240,50);
-  if (frameCount % 5 == 0 && frameCount < frameEnd) {
-    for (int i = 0; i < random(20000); i++) {
-      translate(random(width), random(height), random(50));
+  // Reset frame
+  background(15, 15, 125);
+  
+  for (i = 0; i < 500; i++) {
+    // Scale
+    pushMatrix();
+    scale(noise(1));
+    
+    // TODO track objects
+    // TODO clear frame on each draw
+    // Change height of the camera with mouseY
+    camera(mouseX, mouseY, 220.0, // eyeX, eyeY, eyeZ
+           0.0, 0.0, 0.0, // centerX, centerY, centerZ
+           0.0, 1.0, 0.0); // upX, upY, upZ
+    
+    
+    fill(240, 50);
+    for (i = 0; i < 1000; i++) {
+      translate(noise(width) + (mouseY / 60), noise(height), noise(50));
       fill(240, 50);
-      rotateX(PI/6);
-      rotateY(PI/-3);
+      rotateX(PI/6 + sin(mouseX / width));
+      rotateY(PI/-3 + cos(mouseY / height));
       box(60, 90, 100);
     }
+    popMatrix();
   }
-  popMatrix();
 }
